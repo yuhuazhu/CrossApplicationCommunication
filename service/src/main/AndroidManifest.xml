@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yhz.service">
 
-    <permission android:name="com.yhz.service.Broadcast.permission" />
-    
+    <permission android:name="com.yhz.service.USE_AIDL" />
+    <permission android:name="com.yhz.service.USE_MESSENGER" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,13 +21,15 @@
         </activity>
 
         <service
-            android:name=".AIDLService">
+            android:name=".AIDLService"
+            android:permission="com.yhz.service.USE_AIDL">
             <intent-filter>
                 <action android:name="com.yhz.service.AIDLService" />
             </intent-filter>
         </service>
         <service
-            android:name=".MessengerService">
+            android:name=".MessengerService"
+            android:permission="com.yhz.service.USE_MESSENGER">
             <intent-filter>
                 <action android:name="com.yhz.service.MessengerService" />
             </intent-filter>

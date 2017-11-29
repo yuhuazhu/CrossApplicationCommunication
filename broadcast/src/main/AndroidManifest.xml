@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yhz.broadcast">
 
-    <uses-permission android:name="com.yhz.service.Broadcast.permission" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
