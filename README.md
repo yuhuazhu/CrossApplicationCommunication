@@ -1,2 +1,2 @@
 # CrossApplicationCommunication
-不同APP间通信
+跨APP通信
