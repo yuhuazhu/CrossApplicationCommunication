@@ -15,6 +15,7 @@ class MainActivity : Activity() {
             setContentView(this)
             setOnClickListener {
                 val intent = Intent("$packageName.Broadcast")
+                intent.putExtra("str", "Broadcast by Service")
                 sendBroadcast(intent)
             }
         }

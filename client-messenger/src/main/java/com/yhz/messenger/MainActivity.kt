@@ -12,14 +12,11 @@ import android.os.Messenger
 import kotlin.properties.Delegates
 
 
-class MainActivity : Activity(), ServiceCallback {
-    override fun updateStr(string: String) {
-        btn.text = string
-    }
+class MainActivity : Activity(), MessageCallback {
 
     var mService: Messenger? = null
 
-    val conn = object : ServiceConnection {
+    private val conn = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
             mService = null
         }
@@ -31,22 +28,23 @@ class MainActivity : Activity(), ServiceCallback {
 
     }
 
-    class ReplyHandler(val callback: ServiceCallback) : Handler() {
+    class ReplyHandler(private val callback: MessageCallback) : Handler() {
         override fun handleMessage(msg: Message?) {
-            when(msg?.what) {
+            when (msg?.what) {
                 0 -> {
                     Log.e("handleMessage", "服务端回来的消息")
                     val bundle = msg.data
-                    callback.updateStr(bundle.getString("str"))
+                    callback.messageComing(bundle.getString("str"))
                 }
                 else -> super.handleMessage(msg)
             }
         }
     }
-    var replyMessenger = Messenger(ReplyHandler(this))
 
-    var count = 0
-    var btn: Button by Delegates.notNull()
+    private var replyMessenger = Messenger(ReplyHandler(this))
+    private var count = 0
+    private var btn: Button by Delegates.notNull()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         btn = Button(this).apply {
@@ -72,5 +70,9 @@ class MainActivity : Activity(), ServiceCallback {
         val service = Intent("com.yhz.service.MessengerService")
         service.`package` = "com.yhz.service"
         bindService(service, conn, Context.BIND_AUTO_CREATE)
+    }
+
+    override fun messageComing(string: String) {
+        btn.text = string
     }
 }

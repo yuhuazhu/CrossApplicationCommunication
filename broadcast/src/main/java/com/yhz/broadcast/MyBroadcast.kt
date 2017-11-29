@@ -6,9 +6,10 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 
-class MyBroadcast : BroadcastReceiver() {
-    override fun onReceive(p0: Context?, p1: Intent?) {
+class MyBroadcast(private val callback: BroadcastCallback) : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
         Log.e("MyBroadcast", "onReceive")
-//        Toast.makeText(p0, "got it!", Toast.LENGTH_SHORT).show()
+        callback.broadcastComing(intent?.getStringExtra("str") ?: "null")
+        Toast.makeText(context, "got Broadcast!", Toast.LENGTH_SHORT).show()
     }
 }
