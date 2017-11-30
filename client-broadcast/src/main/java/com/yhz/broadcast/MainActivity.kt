@@ -1,19 +1,25 @@
 package com.yhz.broadcast
 
 import android.app.Activity
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.Button
 import kotlin.properties.Delegates
 
 class MainActivity : Activity(), BroadcastCallback {
 
     private var receiver: MyBroadcast? = null
-    private var tv by Delegates.notNull<TextView>()
+    private var btn by Delegates.notNull<Button>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tv = TextView(this).apply {
-            text = "wait service broadcast"
+        btn = Button(this).apply {
+            text = "send broadcast to service"
+            setOnClickListener {
+                val intent = Intent("$packageName.Broadcast")
+                intent.putExtra("str", "Broadcast by Client")
+                sendBroadcast(intent)
+            }
             setContentView(this)
         }
         val receiver = MyBroadcast(this)
@@ -28,6 +34,6 @@ class MainActivity : Activity(), BroadcastCallback {
     }
 
     override fun broadcastComing(string: String) {
-        tv.text = string
+        // TODO
     }
 }

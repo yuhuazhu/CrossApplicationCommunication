@@ -32,7 +32,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(Button(this)) {
-            text = "点击显示名字"
+            text = "click here"
             setOnClickListener { (it as Button).text = mRemoteService?.string }
             setContentView(this)
         }
